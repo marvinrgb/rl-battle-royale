@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+    integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+    crossorigin=""/>
+  <script
+    src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+    integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+    crossorigin="">
+  </script>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+    #map {
+      height: 100vh;
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+
+  <script>
+    function randBool() {
+      return (Math.random() < 0.5)
+    }
+
+    const coords = {
+      'center' : [50.597986, 8.414445]
+    }
+
+    let all_coords = []
+    all_coords.push(coords.center)
+
+    let marker = {
+      'radius' : 500,
+      'coords' : [50.597986, 8.414445]
+    }
+
+    var map = L.map('map').setView(coords.center, 16);
+
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
+    var circle = L.circle(marker.coords, {
+      color: '#f00',
+      fillColor: '#f03',
+      fillOpacity: 0.2,
+      radius: 500
+    }).addTo(map);
+    
+    
+
+    let circles = []
+
+    let rx;
+    let ry;
+
+    let all_coords_in = 0
+
+    //CIRCLE 2
+    do {
+      rx = Math.random();
+      ry = Math.random();
+    } while ((rx + ry) > 1)
+    console.log("2: " + rx + " " + ry)
+
+    rx = randBool() ? rx : 0 - rx;
+    ry = randBool() ? ry : 0 - ry;
+
+    all_coords.push([all_coords[all_coords_in][0] + rx * 0.0018, all_coords[all_coords_in][1] + ry * 0.0028])
+    circles.push(L.circle([all_coords[all_coords_in][0] + rx * 0.0018, all_coords[all_coords_in][1] + ry * 0.0028], {
+      color: '#0f0',
+      fillColor: '#0f3',
+      fillOpacity: 0.2,
+      radius: 300
+    }).addTo(map));
+
+    //CIRCLE 3
+    all_coords_in++;
+    do {
+      rx = Math.random();
+      ry = Math.random();
+    } while ((rx + ry) > 1)
+    console.log("3: " + rx + " " + ry)
+
+    rx = randBool() ? rx : 0 - rx;
+    ry = randBool() ? ry : 0 - ry;
+
+    all_coords.push([all_coords[all_coords_in][0] + rx * 0.0011, all_coords[all_coords_in][1] + ry * 0.0017])
+    circles.push(L.circle([all_coords[all_coords_in][0] + rx * 0.0011, all_coords[all_coords_in][1] + ry * 0.0017], {
+      color: '#00f',
+      fillColor: '#00f',
+      fillOpacity: 0.2,
+      radius: 180
+    }).addTo(map));
+
+    
+    //CIRCLE 4
+    all_coords_in++;
+    do {
+      rx = Math.random();
+      ry = Math.random();
+    } while ((rx + ry) > 1)
+    console.log("4: " + rx + " " + ry)
+
+    rx = randBool() ? rx : 0 - rx;
+    ry = randBool() ? ry : 0 - ry;
+    all_coords.push([all_coords[all_coords_in][0] + rx * 0.00072, all_coords[all_coords_in][1] + ry * 0.00114])
+    circles.push(L.circle([all_coords[all_coords_in][0] + rx * 0.00072, all_coords[all_coords_in][1] + ry * 0.00114], {
+      color: '#0ff',
+      fillColor: '#0ff',
+      fillOpacity: 0.2,
+      radius: 100
+    }).addTo(map));
+
+    
+    //CIRCLE 5
+    all_coords_in++;
+    do {
+      rx = Math.random();
+      ry = Math.random();
+    } while ((rx + ry) > 1)
+    console.log("5: " + rx + " " + ry)
+
+    rx = randBool() ? rx : 0 - rx;
+    ry = randBool() ? ry : 0 - ry;
+
+    all_coords.push([all_coords[all_coords_in][0] + rx * 0.00035, all_coords[all_coords_in][1] + ry * 0.00056])
+    circles.push(L.circle([all_coords[all_coords_in][0] + rx * 0.00035, all_coords[all_coords_in][1] + ry * 0.00056], {
+      color: '#ff0',
+      fillColor: '#ff0',
+      fillOpacity: 0.2,
+      radius: 60
+    }).addTo(map));
+
+    
+    //CIRCLE 6
+    all_coords_in++;
+    do {
+      rx = Math.random();
+      ry = Math.random();
+    } while ((rx + ry) > 1)
+    console.log("6: " + rx + " " + ry)
+
+    rx = randBool() ? rx : 0 - rx;
+    ry = randBool() ? ry : 0 - ry;
+
+    all_coords.push([all_coords[all_coords_in][0] + rx * 0.00032, all_coords[all_coords_in][1] + ry * 0.00049])
+    circles.push(L.circle([all_coords[all_coords_in][0] + rx * 0.00032, all_coords[all_coords_in][1] + ry * 0.00049], {
+      color: '#f0f',
+      fillColor: '#f0f',
+      fillOpacity: 0.2,
+      radius: 25
+    }).addTo(map));
+
+
+
+    circles.forEach((c) => {
+      console.log(c._latlng)
+    })
+
+
+
+    // transformToNewCirle(marker2_new)
+
+    // function transformToNewCirle(newData) {
+    //   for (let i = 0; i < 100; i++) {
+    //     setTimeout(() => {
+    //       let coords_div = [marker2.coords[0] - newData.coords[0], marker2.coords[1] - newData.coords[1]];
+    //       let radius_div = marker2.radius - newData.radius;
+          
+    //       circle2.setLatLng([marker2.coords[0] + ((coords_div[0] / 100) * i), marker2.coords[1] + ((coords_div[1] / 100) * i)]);
+    //       circle2.setRadius(marker2.radius - (radius_div / 100 * i));
+    //     }, i * 100)
+    //   }
+    // }
+
+    // function getRandomNewCircle(oldCircle) {
+    //   return newCircle = {
+    //     'coords' : [oldCircle.coords[0] + (randBool() ? (Math.random() * 0.0014) : (0 - (Math.random() * 0.0014))) , oldCircle.coords[1] + (randBool() ? (Math.random() * 0.0023) : (0 - (Math.random() * 0.0023)))],
+    //     'radius' : 300
+    //   }
+    // }
+
+    // let randomCircle = getRandomNewCircle(marker)
+  </script>
+</body>
+</html>
