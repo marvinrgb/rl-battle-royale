@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+</head>
+<body>
+  
+  <h1>test</h1>
+
+  <script defer>
+    let socket = io();
+
+    window.localStorage.getItem('player_id') ? signIn() : signUp();
+
+    function signIn() {
+      let player_id = window.localStorage.getItem('player_id');
+      console.log(player_id)
+      socket.emit('sign-in', {"player_id" : player_id});
+    }
+
+    function signUp() {
+      let username = prompt('Enter username: ');
+      socket.emit('sign-up', {"username" : username});
+    }
+    socket.on('sign-up-new-id', (data) => {
+      window.localStorage.setItem('player_id', data.player_id);
+    });
+
+    socket.on('reset-client-auth', () => {
+      window.localStorage.removeItem('player_id');
+      location.reload();
+    })
+
+  </script>
+</body>
+</html>
