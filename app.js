@@ -94,7 +94,10 @@ io.on('connection', (socket) => {
     socket.join(String(game.code));
   })
   socket.on('start-game', (data) => {
-    io.emit('start-game', (data));
+    io.emit('start-game', ({
+      'coords' : data,
+      'radius' : 500
+    }));
   })
 })
 
