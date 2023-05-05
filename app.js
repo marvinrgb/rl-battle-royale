@@ -10,33 +10,15 @@ const io = new Server(server, { cors: { origin: '*' } });
 const PORT = 3000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
+import generateCircles from './functions/generateCircles.js';
+import Game  from './functions/gameClass.js';
 // app.use(logger.logTable);
 
 app.use(express.json());
 
 
-class Game {
-  code;
-  constructor (player) {
-    this.players.push(player);
-    this.captain = player.player_id;
-    this.code = Math.floor(Math.random() * 10000);
-  }
-  max_players = 10;
-  players = [];
-  power_ups = [];
-  seeker;
-  captain;
-  startTime;
 
-  joinPlayer(player_id) {
-    if (this.players.find((p) => p.id == player_id)) return;
-    this.players.push({
-      'id' : player_id
-    })
-  }
-}
+
 
 const games = [];
 
@@ -55,6 +37,9 @@ function getPlayerBySocket(socket_id) {
 function getGameByCode(code) {
   return games.find((g) => g.code == code);
 }
+function getGameByPlayer(player_id) {
+  return games.find((g) => g.players.some(player => player.player_id == player_id))
+}
 
 let players = [];
 
@@ -65,6 +50,7 @@ io.on('connection', (socket) => {
     if (players[players.indexOf(player_instance)]) {
       players[players.indexOf(player_instance)].socket_id = socket.id;
       console.log('[socket - signIn] ' + player_instance.username + ' with playerId: ' + data.player_id + ' , socketId: ' + socket.id);
+      socket.emit('reconnect', getGameByPlayer(data.player_id));
     } else {
       socket.emit('reset-client-auth');
     }
@@ -94,10 +80,12 @@ io.on('connection', (socket) => {
     socket.join(String(game.code));
   })
   socket.on('start-game', (data) => {
-    io.emit('start-game', ({
-      'coords' : data,
-      'radius' : 500
-    }));
+    let game = getGameByPlayer(getPlayerBySocket(socket.id).player_id);
+    // console.log(getGameByPlayer(getPlayerBySocket(socket.id).player_id))
+    game.start(data);
+    // game.circles = generateCircles(data);
+    console.log(game.circles)
+    io.to(String(game.code)).emit('start-game', (game));
   })
 })
 
